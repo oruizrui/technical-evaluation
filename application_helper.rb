@@ -1,0 +1,6 @@
+require './lib/checkout.rb'
+require './lib/item.rb'
+require './lib/price_rule.rb'
+require './lib/price_rules/get_free.rb'
+require './lib/price_rules/fixed_amount.rb'
+require './lib/price_rules/percentage.rb'
