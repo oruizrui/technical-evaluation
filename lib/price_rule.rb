@@ -13,3 +13,9 @@ class PriceRule
   end
 
 end
+
+class PriceRuleError < StandardError
+  def initialize(message)
+    super
+  end
+end

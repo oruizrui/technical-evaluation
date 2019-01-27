@@ -4,8 +4,14 @@ class GetFree < PriceRule
   # {code: , prerequisite:, value: }
   # code - The String code of the item to apply a price rule
   # prerequisite - The String minimum number of items for the price rule to be applicable.
-  # value - The Float of value of the price rule.
+  # value - The Float of value of the price rule. The value must be posirtive.
+  # Returns an exception if value is negative.
+  # Returns an exception if value is higher than prerequisite.
   def initialize(attributes)
+
+    raise PriceRuleError.new('Value not be lowest than 0') if attributes[:value] < 0
+    raise PriceRuleError.new('Quantity to get free not be higher than quantity to buy.') if attributes[:value] > attributes[:prerequisite]
+
     @target = attributes[:target]
     @prerequisite = attributes[:prerequisite]
     @value = attributes[:value]
