@@ -15,24 +15,23 @@ describe Checkout do
         FixedAmount.new({target: @items[1], prerequisite: 3, value: 4.50}),
         Percentage.new({target: @items[2], prerequisite: 3, value: 2/3.to_f}),
     ]
-
   end
 
-  describe 'Checkout  new is successful' do
+  describe 'Checkout new is successful' do
 
-    it 'with prire rules' do
+    it 'With prire rules' do
       co = Checkout.new(@pricing_rules)
 
       expect(co.pricing_rules.any?).to be true
     end
 
-    it 'without price rules' do
+    it 'Without price rules' do
       co = Checkout.new()
 
       expect(co.pricing_rules.any?).to be false
     end
 
-    it 'New checkout return total and discounts 0.o' do
+    it 'New checkout return total and discounts 0.0' do
       co = Checkout.new(@pricing_rules)
 
       expect(co.total).to eql(0.0)
@@ -40,7 +39,6 @@ describe Checkout do
     end
 
   end
-
 
   describe 'Proposed examples' do
 

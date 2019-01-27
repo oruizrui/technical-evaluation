@@ -42,34 +42,76 @@ describe PriceRule do
 
   describe 'PriceRule raise Error excepcion' do
 
-    it 'GetFreeError: value is negative' do
-      price_rule = {target: @items[0], prerequisite: 1, value: -2}
+    describe 'Common exceptions on PriceRule' do
 
-      expect { GetFree.new(price_rule) }.to raise_error(PriceRuleError)
+      it 'Unknown target' do
+        price_rule = {target: nil, prerequisite: 1, value: 2}
+
+        expect { GetFree.new(price_rule) }.to raise_error(PriceRuleError)
+      end
+
+      it 'Unknown prerequisite' do
+        price_rule = {target: @items[0], prerequisite: nil, value: 2}
+
+        expect { GetFree.new(price_rule) }.to raise_error(PriceRuleError)
+      end
+
+      it 'Unknown value' do
+        price_rule = {target: @items[0], prerequisite: 1, value: nil}
+
+        expect { GetFree.new(price_rule) }.to raise_error(PriceRuleError)
+      end
+
+      it 'Prerequisite must be a number' do
+        price_rule = {target: @items[0], prerequisite: '1', value: 2}
+
+        expect { GetFree.new(price_rule) }.to raise_error(PriceRuleError)
+      end
+
+      it 'Prerequisite must be a positive number' do
+        price_rule = {target: @items[0], prerequisite: -1, value: 2}
+
+        expect { GetFree.new(price_rule) }.to raise_error(PriceRuleError)
+      end
+
+      it 'Value must be a number' do
+        price_rule = {target: @items[0], prerequisite: 1, value: '2'}
+
+        expect { GetFree.new(price_rule) }.to raise_error(PriceRuleError)
+      end
+
+      it 'Value must be a positive number' do
+        price_rule = {target: @items[0], prerequisite: 1, value: -2}
+
+        expect { GetFree.new(price_rule) }.to raise_error(PriceRuleError)
+      end
+
     end
 
-    it 'GetFreeError: value is higher than prerequisite' do
-      price_rule = {target: @items[0], prerequisite: 1, value: 2}
+    describe 'Exceptions for GetFree' do
 
-      expect { GetFree.new(price_rule) }.to raise_error(PriceRuleError)
+      it 'Value cannot be higher than prerequisite' do
+        price_rule = {target: @items[0], prerequisite: 1, value: 2}
+
+        expect { GetFree.new(price_rule) }.to raise_error(PriceRuleError)
+      end
+
     end
 
-    it 'FixedAmountError: value is negative' do
-      price_rule = {target: @items[1], prerequisite: 3, value: -1}
+    describe 'Exceptions for Percentage' do
 
-      expect { FixedAmount.new(price_rule) }.to raise_error(PriceRuleError)
-    end
+      it 'Value cannot be higher than 1' do
+        price_rule = {target: @items[2], prerequisite: 3, value: 2.to_f}
 
-    it 'PercentageError: value is negative' do
-      price_rule = {target: @items[2], prerequisite: 3, value: -1}
+        expect { Percentage.new(price_rule) }.to raise_error(PriceRuleError)
+      end
 
-      expect { Percentage.new(price_rule) }.to raise_error(PriceRuleError)
-    end
+      it 'Value cannot be lower than 0' do
+        price_rule = {target: @items[2], prerequisite: 3, value: -10.to_f}
 
-    it 'PercentageError: value is bigger than 1' do
-      price_rule = {target: @items[2], prerequisite: 3, value: 2}
+        expect { Percentage.new(price_rule) }.to raise_error(PriceRuleError)
+      end
 
-      expect { Percentage.new(price_rule) }.to raise_error(PriceRuleError)
     end
 
   end

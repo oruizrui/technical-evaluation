@@ -21,7 +21,7 @@ class Checkout
   end
 
   # Returns a sum discounts of scanned items, as a Float.
-  # Returns 0 If items not have any pricing_rules returs 0, as a Integer.
+  # Returns 0.0 If items not have any pricing_rules returs 0, as a Integer.
   def discounts
     return 0.0 unless @pricing_rules.any?
     @pricing_rules.map{ |pricing_rule| pricing_rule.discount(@items) }.reduce(&:+)

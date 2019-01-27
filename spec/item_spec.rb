@@ -13,20 +13,32 @@ describe Item do
 
   describe 'Item raise Error excepcion' do
 
-    it 'Incomplete code' do
+    it 'Unknown code' do
       item_attributes =  {code: nil, name: 'Green tea', price: 3.11}
 
       expect { Item.new(item_attributes) }.to raise_error(ItemError)
     end
 
-    it 'Incomplete name' do
+    it 'Unknown name' do
       item_attributes =  {code: 'GR1', name: nil, price: 3.11}
 
       expect { Item.new(item_attributes) }.to raise_error(ItemError)
     end
 
-    it 'Incomplete price' do
+    it 'Unknown price' do
       item_attributes =  {code: 'GR1', name: 'Green tea', price: nil}
+
+      expect { Item.new(item_attributes) }.to raise_error(ItemError)
+    end
+
+    it 'Price must be a number' do
+      item_attributes =  {code: 'GR1', name: 'Green tea', price: '3.11'}
+
+      expect { Item.new(item_attributes) }.to raise_error(ItemError)
+    end
+
+    it 'Price is lower than 0' do
+      item_attributes =  {code: 'GR1', name: 'Green tea', price: -1}
 
       expect { Item.new(item_attributes) }.to raise_error(ItemError)
     end
