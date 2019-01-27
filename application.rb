@@ -19,6 +19,3 @@ co.scan(items[0])
 co.scan(items[1])
 co.scan(items[2])
 pp co.total
-
-
-GetFree.new({target: items[0], prerequisite: nil, value: 1})
