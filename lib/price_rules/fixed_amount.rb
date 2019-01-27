@@ -16,7 +16,7 @@ class FixedAmount < PriceRule
   # Returns 0 if the number of items is less than the prerequisite
   def discount(items)
     items_applicable_count = items.select{|item| item.code == @target.code }.count
-    return 0 if items_applicable_count < @prerequisite
+    return 0.0 if items_applicable_count < @prerequisite
     items_applicable_count * (@target.price - @value)
   end
 

@@ -10,7 +10,7 @@ class Checkout
 
   # item - The Object of item scanned
   # {code: , name:, price: }
-  # See each itemto know his values
+  # See each item to know his values
   def scan(item)
     @items << item
   end
@@ -23,13 +23,18 @@ class Checkout
   # Returns a sum discounts of scanned items, as a Float.
   # Returns 0 If items not have any pricing_rules returs 0, as a Integer.
   def discounts
-    return 0 unless @pricing_rules.any?
+    return 0.0 unless @pricing_rules.any?
     @pricing_rules.map{ |pricing_rule| pricing_rule.discount(@items) }.reduce(&:+)
   end
 
   # Returns a calculated total, as a Float.
   def total
     subtotal - discounts
+  end
+
+  # Returns a Array of added price rules
+  def pricing_rules
+    @pricing_rules
   end
   
 end
