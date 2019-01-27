@@ -1,0 +1,3 @@
+class PriceRule
+
+end
